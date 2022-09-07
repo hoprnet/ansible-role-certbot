@@ -29,3 +29,10 @@
     job: >
       root cd /etc/letsencrypt/ && ./renew_certificates.sh >>
       /var/log/certbot_cron_`date +%Y%m%d_%H%M%S`.log 2>&1
+- name: "Create base certificate directory"
+  ansible.builtin.file:
+    path: /etc/letsencrypt/private-keys
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: "755"

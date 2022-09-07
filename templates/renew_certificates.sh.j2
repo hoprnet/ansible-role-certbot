@@ -7,7 +7,12 @@ set -x
 
 remaining_days=`certbot certificates 2> /dev/null | grep Expiry | sed 's/.*VALID: //' | sed 's/ days)//' | sort | head -1`
 if [ "$remaining_days" -lt "5" ]; then 
-    certbot renew    
+    certbot renew
+    mkdir -p /etc/letsencrypt/private-keys/
+    for domain in `ls -1 /etc/letsencrypt/archive/`; do
+        cd /etc/letsencrypt/live/${domain}
+        cat cert.pem chain.pem privkey.pem > /etc/letsencrypt/private-keys/${domain}.pem
+    done
 else
     echo "No certificates about to expire"
 fi
