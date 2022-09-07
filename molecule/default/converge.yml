@@ -8,7 +8,7 @@
       changed_when: false
     - name: "Install Python3"
       ansible.builtin.raw: "apt-get -y install python3-pip"
-      changed_when: false  
+      changed_when: false
 - name: Converge
   hosts: all
   gather_facts: true

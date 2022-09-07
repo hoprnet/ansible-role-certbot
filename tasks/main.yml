@@ -26,6 +26,6 @@
     day: "{{ cron_day }}"
     month: "*"
     weekday: "*"
-    job: "root cd /etc/letsencrypt/ && ./renew_certificates.sh >> /var/log/certbot_cron_`date +%Y%m%d_%H%M%S`.log 2>&1"
-
-
+    job: >
+      root cd /etc/letsencrypt/ && ./renew_certificates.sh >>
+      /var/log/certbot_cron_`date +%Y%m%d_%H%M%S`.log 2>&1

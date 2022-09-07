@@ -9,7 +9,7 @@ platforms:
     pre_build_image: true
     published_ports:
       - 80:80/tcp
-      - 443:443/tcp    
+      - 443:443/tcp
 lint: |
   set -e
   yamllint .

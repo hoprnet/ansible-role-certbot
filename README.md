@@ -25,7 +25,7 @@ Role Variables for adding a certificate
 The variables for this tasks are:
 ```
 certificate_email: acme@hoprnet.org
-full_chain_private_key_path: "/etc/letsencrypt/live/{{ certificate_domain_name }}/private-key-cert.pem"  
+full_private_key_path: "/etc/letsencrypt/live/{{ certificate_domain_name }}/private-key-cert.pem"  
 certificate_domain_name: certbot1.molecule.hoprtech.net
 ```
 
