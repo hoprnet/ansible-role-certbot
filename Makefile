@@ -13,7 +13,8 @@ test: ## Test ansible role
 
 .PHONY: lint
 lint: ## Lint code
-	molecule lint
+	yamllint . && \
+  	ansible-lint --exclude ~/.ansible/roles
 
 .PHONY: help
 help:
