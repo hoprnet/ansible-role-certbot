@@ -1,0 +1,29 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: debian-11
+    image: docker.io/jrei/systemd-debian:bullseye
+    pre_build_image: true
+    published_ports:
+      - 80:80/tcp
+      - 443:443/tcp    
+lint: |
+  set -e
+  yamllint .
+  ansible-lint --exclude ~/.ansible/roles
+provisioner:
+  name: ansible
+  inventory:
+    hosts:
+      all:
+        children:
+          debian:
+            hosts:
+              debian-11:
+            vars:
+              ansible_python_interpreter: /usr/bin/python3
+verifier:
+  name: ansible

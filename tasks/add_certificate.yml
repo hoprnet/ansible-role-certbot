@@ -1,0 +1,21 @@
+---
+# tasks file for certbot
+
+- name: 'Check if certificate exists'
+  ansible.builtin.stat:
+    path: "/etc/letsencrypt/live/{{ certificate_domain_name }}/cert.pem"
+  register: certificate
+
+- name: 'Create certificate'
+  ansible.builtin.shell: |
+    certbot certonly \
+      --standalone --non-interactive --agree-tos \
+      -d {{ certificate_domain_name }} \
+      --email {{ certificate_email }}
+    cd /etc/letsencrypt/live/{{ certificate_domain_name }}/
+    cat cert.pem chain.pem privkey.pem > {{ full_chain_private_key_path }}
+  args:
+    executable: /bin/bash
+  when: not certificate.stat.exists
+  register: certificate_created
+  failed_when: certificate_created.rc != 0

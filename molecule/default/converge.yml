@@ -1,0 +1,24 @@
+---
+- name: Install Requirements
+  hosts: all
+  gather_facts: false
+  pre_tasks:
+    - name: "Update packages"
+      ansible.builtin.raw: "apt-get update"
+      changed_when: false
+    - name: "Install Python3"
+      ansible.builtin.raw: "apt-get -y install python3-pip"
+      changed_when: false  
+- name: Converge
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: "Install certbot"
+      ansible.builtin.include_role:
+        name: hopr.certbot
+    - name: "Add certificate"
+      ansible.builtin.include_role:
+        name: hopr.certbot
+        tasks_from: add_certificate
+      vars:
+        certificate_domain_name: "certbot1.molecule.hoprtech.net"

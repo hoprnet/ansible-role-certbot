@@ -1,0 +1,31 @@
+---
+# tasks file for certbot
+
+- name: "Install packages"
+  ansible.builtin.package:
+    name:
+      - cron
+      - certbot
+    state: present
+
+- name: "Renew certificate script"
+  become: false
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/renew_certificates.sh.j2"
+    dest: "/etc/letsencrypt/renew_certificates.sh"
+    owner: "root"
+    group: "root"
+    mode: "755"
+
+- name: "Install crontab task"
+  ansible.builtin.cron:
+    name: "certbot"
+    state: present
+    minute: "{{ cron_minute }}"
+    hour: "{{ cron_hour }}"
+    day: "{{ cron_day }}"
+    month: "*"
+    weekday: "*"
+    job: "root cd /etc/letsencrypt/ && ./renew_certificates.sh >> /var/log/certbot_cron_`date +%Y%m%d_%H%M%S`.log 2>&1"
+
+

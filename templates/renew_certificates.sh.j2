@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# exit on errors, undefined variables, ensure errors in pipes are not hidden
+set -Eeuo pipefail
+# debug mode
+set -x
+
+remaining_days=`certbot certificates 2> /dev/null | grep Expiry | sed 's/.*VALID: //' | sed 's/ days)//' | sort | head -1`
+if [ "$remaining_days" -lt "5" ]; then 
+    certbot renew    
+else
+    echo "No certificates about to expire"
+fi

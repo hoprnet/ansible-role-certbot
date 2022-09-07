@@ -1,0 +1,11 @@
+---
+# defaults file for certbot
+
+
+cron_minute: 0
+cron_hour: 0
+cron_day: 1
+
+
+certificate_email: acme@hoprnet.org
+full_chain_private_key_path: "/etc/letsencrypt/live/{{ certificate_domain_name }}/private-key-cert.pem"  
