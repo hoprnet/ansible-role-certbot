@@ -13,7 +13,8 @@
       -d {{ certificate_domain_name }} \
       --email {{ certificate_email }}
     cd /etc/letsencrypt/live/{{ certificate_domain_name }}/
-    cat cert.pem chain.pem privkey.pem > /etc/letsencrypt/private-keys/{{ certificate_domain_name }}.pem
+    cat cert.pem chain.pem privkey.pem > \
+    /etc/letsencrypt/private-keys/{{ certificate_domain_name }}.pem
   args:
     executable: /bin/bash
   when: not certificate.stat.exists
