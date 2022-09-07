@@ -13,12 +13,18 @@
   hosts: all
   gather_facts: true
   tasks:
+    - name: Is running on Github
+      local_action:
+        module: ansible.builtin.set_fact
+        github_execution: "{{ lookup('env', 'RUNNING_ON_GITHUB') }}"
     - name: "Install certbot"
       ansible.builtin.include_role:
         name: hopr.certbot
+      when: not github_execution
     - name: "Add certificate"
       ansible.builtin.include_role:
         name: hopr.certbot
         tasks_from: add_certificate
       vars:
         certificate_domain_name: "certbot1.molecule.hoprtech.net"
+      when: not github_execution

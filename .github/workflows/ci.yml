@@ -40,6 +40,7 @@ jobs:
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DEBUG: 1
           ANSIBLE_VERBOSITY: 4
+          RUNNING_ON_GITHUB: true
   lint:
     name: Lint
     runs-on: ubuntu-latest
