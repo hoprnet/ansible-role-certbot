@@ -13,6 +13,7 @@ if [ "$remaining_days" -lt "5" ]; then
         cd /etc/letsencrypt/live/${domain}
         cat cert.pem chain.pem privkey.pem > /etc/letsencrypt/private-keys/${domain}.pem
     done
+    service haproxy restart
 else
     echo "No certificates about to expire"
 fi
